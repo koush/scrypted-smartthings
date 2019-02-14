@@ -4,9 +4,7 @@ function Capability(client, id) {
 }
 
 Capability.prototype.command = function(capability, command, args) {
-    return this.client.command(this.id, capability, command, args)
-    .then(response => console.log(response.data))
-    .catch(e => console.log(e));
+    return this.client.command(this.id, capability, command, args);
 }
 
 module.exports = Capability;
