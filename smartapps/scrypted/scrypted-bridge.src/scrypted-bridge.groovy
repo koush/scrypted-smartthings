@@ -345,6 +345,7 @@ def changeHandler(evt) {
     		method: "GET",
     		path: "/endpoint/@scrypted/smartthings/public/update",
     		headers: [
+                "Content-Type": "application/json",
             	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}",
                 change_device: evt.deviceId,
@@ -393,6 +394,7 @@ def enableDirectUpdates() {
     		method: "GET",
     		path: "/endpoint/@scrypted/smartthings/public/initial",
     		headers: [
+                "Content-Type": "application/json",
             	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}"
     		],
