@@ -5,7 +5,7 @@
  *
  */
 definition(
-    name: "JSON Complete API",
+    name: "Scrypted Bridge",
     namespace: "pdlove",
     author: "Paul Lovelace",
     description: "API for JSON with complete set of devices",
