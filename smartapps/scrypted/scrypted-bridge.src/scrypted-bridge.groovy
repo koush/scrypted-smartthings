@@ -33,24 +33,27 @@ def copyConfig() {
             input "switchList", "capability.switch", title: "All Switches", multiple: true, required: false
             //paragraph "Devices Selected: ${deviceList ? deviceList?.size() : 0}\nSensors Selected: ${sensorList ? sensorList?.size() : 0}\nSwitches Selected: ${switchList ? switchList?.size() : 0}"
         }
-        section("Configure Pubnub") {
-            input "pubnubSubscribeKey", "text", title: "PubNub Subscription Key", multiple: false, required: false
-            input "pubnubPublishKey", "text", title: "PubNub Publish Key", multiple: false, required: false
-            input "subChannel", "text", title: "Channel (Can be anything)", multiple: false, required: false
+        section("Configure Scrypted Server") {
+            input "scryptedAddress", "text", "Scrypted Hub IP Address", multiple: false, required: true
         }
-        section() {
-            paragraph "View this SmartApp's configuration to use it in other places."
-            href url:"${apiServerUrl("/api/smartapps/installations/${app.id}/config?access_token=${state.accessToken}")}", style:"embedded", required:false, title:"Config", description:"Tap, select, copy, then click \"Done\""
-        }
+        // section("Configure Pubnub") {
+        //     input "pubnubSubscribeKey", "text", title: "PubNub Subscription Key", multiple: false, required: false
+        //     input "pubnubPublishKey", "text", title: "PubNub Publish Key", multiple: false, required: false
+        //     input "subChannel", "text", title: "Channel (Can be anything)", multiple: false, required: false
+        // }
+        // section() {
+        //     paragraph "View this SmartApp's configuration to use it in other places."
+        //     href url:"${apiServerUrl("/api/smartapps/installations/${app.id}/config?access_token=${state.accessToken}")}", style:"embedded", required:false, title:"Config", description:"Tap, select, copy, then click \"Done\""
+        // }
  
-        section() {
-        	paragraph "View the JSON generated from the installed devices."
-            href url:"${apiServerUrl("/api/smartapps/installations/${app.id}/devices?access_token=${state.accessToken}")}", style:"embedded", required:false, title:"Device Results", description:"View accessories JSON"
-        }
-        section() {
-        	paragraph "Enter the name you would like shown in the smart app list"
-        	label title:"SmartApp Label (optional)", required: false 
-        }
+        // section() {
+        // 	paragraph "View the JSON generated from the installed devices."
+        //     href url:"${apiServerUrl("/api/smartapps/installations/${app.id}/devices?access_token=${state.accessToken}")}", style:"embedded", required:false, title:"Device Results", description:"View accessories JSON"
+        // }
+        // section() {
+        // 	paragraph "Enter the name you would like shown in the smart app list"
+        // 	label title:"SmartApp Label (optional)", required: false 
+        // }
     }
 }
 
