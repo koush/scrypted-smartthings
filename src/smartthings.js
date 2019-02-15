@@ -2,6 +2,8 @@ import axios from 'axios';
 
 function SmartThings(token) {
     this.token = token;
+    // this.appId = appId;
+    // this.accessToken = accessToken;
 }
 
 SmartThings.prototype.getDefaultOptions = function() {
@@ -12,7 +14,20 @@ SmartThings.prototype.getDefaultOptions = function() {
     }
 }
 
+SmartThings.prototype.status = function(id) {
+    // if (!this.appId || !this.accessToken) {
+    //     return Promise.reject('appId or accessToken not provided.');
+    // }
+
+    return axios.get(`https://api.smartthings.com/v1/devices/${id}/status`);
+}
+
 SmartThings.prototype.command = function(id, capability, command, args) {
+    // if (!this.appId || !this.accessToken) {
+    //     return Promise.reject('appId or accessToken not provided.');
+    // }
+
+    // return axios.post(`https://graph.api.smartthings.com:443/api/smartapps/installations/${this.appId}/${id}/command/${command}?access_token=${this.accessToken}`, command || {})
     return axios.post(`https://api.smartthings.com/v1/devices/${id}/commands`, {
         "commands": [
             {
@@ -26,6 +41,8 @@ SmartThings.prototype.command = function(id, capability, command, args) {
 }
 
 SmartThings.prototype.list = function() {
+    // return axios.get(`https://graph.api.smartthings.com:443/api/smartapps/installations/${this.appId}/devices?access_token=${this.accessToken}`)
+
     return axios.get('https://api.smartthings.com/v1/devices', this.getDefaultOptions())
 }
 

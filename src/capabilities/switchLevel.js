@@ -13,10 +13,14 @@ SwitchLevel.prototype.setLevel = function(level) {
 }
 
 SwitchLevel.prototype.getLevel = function() {
-    return 100;
+    return this.getAttribute(Switch.Attributes, 'level');
 }
 
 SwitchLevel.SmartThingsCapability = 'switchLevel';
 SwitchLevel.ScryptedInterface = 'Brightness';
-
+SwitchLevel.Attributes = {
+    level: function(value) {
+        return value; 
+    }
+}
 module.exports = SwitchLevel;
