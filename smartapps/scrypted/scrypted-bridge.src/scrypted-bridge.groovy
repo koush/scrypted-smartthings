@@ -343,7 +343,7 @@ def changeHandler(evt) {
         log.debug "Sending Update to ${state.directIP}:${state.directPort}"
         def result = new physicalgraph.device.HubAction(
     		method: "GET",
-    		path: "/endpoint/scrypted@smartthings/public/update",
+    		path: "/endpoint/@scrypted/smartthings/public/update",
     		headers: [
             	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}",
@@ -391,7 +391,7 @@ def enableDirectUpdates() {
 	log.debug("Trying ${state.directIP}:${state.directPort}")
 	def result = new physicalgraph.device.HubAction(
     		method: "GET",
-    		path: "/endpoint/scrypted@smartthings/public/initial",
+    		path: "/endpoint/@scrypted/smartthings/public/initial",
     		headers: [
             	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}"
