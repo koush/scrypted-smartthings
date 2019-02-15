@@ -345,6 +345,7 @@ def changeHandler(evt) {
     		method: "GET",
     		path: "/web/component/script/scrypted@smartthings/update",
     		headers: [
+            	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}",
                 change_device: evt.deviceId,
                 change_attribute: evt.name,
@@ -391,10 +392,8 @@ def enableDirectUpdates() {
 	def result = new physicalgraph.device.HubAction(
     		method: "GET",
     		path: "/web/component/script/scrypted@smartthings/initial",
-            query: {
-                access_token: state.accessToken
-            },
     		headers: [
+            	Authorization: state.accessToken,
         		HOST: "${state.directIP}:${state.directPort}"
     		],
     		query: deviceData
