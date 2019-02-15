@@ -79,5 +79,13 @@ DeviceProvider.prototype.getDevice = function (id) {
     return this.devices[id];
 }
 
+DeviceProvider.prototype.getEndpoint = function() {
+    return "@scrypted/smartthings";
+};
 
+DeviceProvider.prototype.onRequest = function(req, res) {
+    res.send('ok!');
+};
+
+  
 export default new DeviceProvider();
