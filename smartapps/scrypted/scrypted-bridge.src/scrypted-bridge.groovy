@@ -34,7 +34,7 @@ def copyConfig() {
             //paragraph "Devices Selected: ${deviceList ? deviceList?.size() : 0}\nSensors Selected: ${sensorList ? sensorList?.size() : 0}\nSwitches Selected: ${switchList ? switchList?.size() : 0}"
         }
         section("Configure Scrypted Server") {
-            input "scryptedAddress", "text", "Scrypted Hub IP Address", multiple: false, required: true
+            input "scryptedAddress", "text", title: "Scrypted Hub IP Address", multiple: false, required: true
         }
         // section("Configure Pubnub") {
         //     input "pubnubSubscribeKey", "text", title: "PubNub Subscription Key", multiple: false, required: false
