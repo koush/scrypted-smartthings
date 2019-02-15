@@ -83,10 +83,44 @@ DeviceProvider.prototype.getEndpoint = function() {
     return "@scrypted/smartthings";
 };
 
+var Router = require('router')
+var router = Router();
+
 DeviceProvider.prototype.onRequest = function(req, res) {
-    log.i(req.body);
-    res.send('ok!');
+    req.url = req.url.replace(req.rootPath, "");
+    router(req, res, function() {
+        res.send({
+            code: 404,
+        }, "Not Found")
+    });
 };
+
+function checkToken(req, res) {
+    var accessToken = scriptSettings.getString('accessToken');
+    if (!accessToken) {
+        scriptSettings.putString('accessToken', req.headers['authorization']);
+    }
+    else if (accessToken != req.headers['Authorization']) {
+        res.send({
+            code: 401,
+        }, "Not Authorized");
+        return false;
+    }
+    return true;
+}
+
+router.post('/public/initial', function(req, res) {
+    if (!checkToken(req, res)) {
+        return;
+    }
+    res.send('ok!');
+})
+router.post('/public/update', function(req, res) {
+    if (!checkToken(req, res)) {
+        return;
+    }
+    res.send('ok!');
+})
 
   
 export default new DeviceProvider();
