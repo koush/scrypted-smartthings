@@ -7,8 +7,8 @@
 definition(
     name: "Scrypted Bridge",
     namespace: "scrypted",
-    author: "Paul Lovelace",
-    description: "API for JSON with complete set of devices",
+    author: "Scrypted", // originally Paul Lovelace
+    description: "Send SmartThings device events to Scrypted",
     category: "SmartThings Labs",
     iconUrl:   "https://raw.githubusercontent.com/pdlove/homebridge-smartthings/master/smartapps/JSON%401.png",
     iconX2Url: "https://raw.githubusercontent.com/pdlove/homebridge-smartthings/master/smartapps/JSON%402.png",
