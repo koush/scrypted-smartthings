@@ -25,16 +25,19 @@ def copyConfig() {
     if (!state.accessToken) {
         createAccessToken()
     }
-    dynamicPage(name: "copyConfig", title: "Configure Devices", install:true, uninstall:true) {
-        section("Select devices to include in the /devices API call") {
-            paragraph "Version 0.5.5"
-            input "deviceList", "capability.refresh", title: "Most Devices", multiple: true, required: false
-            input "sensorList", "capability.sensor", title: "Sensor Devices", multiple: true, required: false
-            input "switchList", "capability.switch", title: "All Switches", multiple: true, required: false
+    dynamicPage(name: "copyConfig", title: "Select Devices to Sync", install:true, uninstall:true) {
+        section() {
+            input "deviceList", "capability.refresh", title: "View All Devices", multiple: true, required: false
+            input "sensorList", "capability.sensor", title: "View Sensors", multiple: true, required: false
+            input "switchList", "capability.switch", title: "View Switches", multiple: true, required: false
             //paragraph "Devices Selected: ${deviceList ? deviceList?.size() : 0}\nSensors Selected: ${sensorList ? sensorList?.size() : 0}\nSwitches Selected: ${switchList ? switchList?.size() : 0}"
         }
         section("Configure Scrypted Server") {
+            paragraph "E.g. 192.168.1.50"
             input "scryptedAddress", "text", title: "Scrypted Hub IP Address", multiple: false, required: true
+        }
+        section() {
+            paragraph "Version 0.5.5"
         }
         // section("Configure Pubnub") {
         //     input "pubnubSubscribeKey", "text", title: "PubNub Subscription Key", multiple: false, required: false
@@ -141,6 +144,7 @@ def initialize() {
          createAccessToken()
     }
     registerAll()
+    enableDirectUpdates()
 	state.subscriptionRenewed = 0
     subscribe(location, null, HubResponseEvent, [filterEvents:false])
     log.debug "0.5.5"
@@ -378,8 +382,10 @@ def getChangeEvents() {
 }
 def enableDirectUpdates() {
 	log.debug("Command Request")
-	state.directIP = params.ip
-    state.directPort = params.port
+    state.directIP = scryptedAddress
+    state.directPort = 9080
+	// state.directIP = params.ip
+    // state.directPort = params.port
 	log.debug("Trying ${state.directIP}:${state.directPort}")
 	def result = new physicalgraph.device.HubAction(
     		method: "GET",
