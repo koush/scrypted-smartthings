@@ -325,8 +325,6 @@ def registerChangeHandler(myList) {
 	}
 }
 
-webroot = "/web/component/script/scrypted@smartthings"
-
 def changeHandler(evt) {
 	//Send to Pubnub if we need to.
     if (pubnubPublishKey!=null) {
@@ -345,7 +343,7 @@ def changeHandler(evt) {
         log.debug "Sending Update to ${state.directIP}:${state.directPort}"
         def result = new physicalgraph.device.HubAction(
     		method: "GET",
-    		path: "${webroot}/update",
+    		path: "/web/component/script/scrypted@smartthings/update",
     		headers: [
         		HOST: "${state.directIP}:${state.directPort}",
                 change_device: evt.deviceId,
@@ -392,7 +390,7 @@ def enableDirectUpdates() {
 	log.debug("Trying ${state.directIP}:${state.directPort}")
 	def result = new physicalgraph.device.HubAction(
     		method: "GET",
-    		path: "${webroot}/initial",
+    		path: "/web/component/script/scrypted@smartthings/initial",
             query: {
                 access_token: state.accessToken
             },
