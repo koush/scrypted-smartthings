@@ -84,6 +84,7 @@ DeviceProvider.prototype.getEndpoint = function() {
 };
 
 DeviceProvider.prototype.onRequest = function(req, res) {
+    log.i(req.body);
     res.send('ok!');
 };
 
