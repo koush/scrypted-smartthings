@@ -10,11 +10,12 @@ log.clearAlerts();
 
 const client = new SmartThings(token);
 
+// create mappings between SmartThings Capabiltiies and Scrypted Interfaces
 const Capabilities = {
 }
 
+// create mappings between SmartThings Attributes and Scrypted Interfaces
 const Attributes = {
-
 }
 
 function addCapability(constructor) {
