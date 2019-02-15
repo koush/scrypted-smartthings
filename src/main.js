@@ -2,24 +2,12 @@ import SmartThings from './smartthings';
 
 const token = scriptSettings.getString('token');
 if (!token || !token.length) {
-    log.a(`No SmartThings "token" was provided in Plugin Settings. Create a personal access token here: https://account.smartthings.com/tokens`);
+    log.a(`No SmartThings "token" was provided in Plugin Settings. Create a personal access (request all permissions) token here: https://account.smartthings.com/tokens`);
     throw new Error();
 }
 log.clearAlerts();
 
 const client = new SmartThings(token);
-
-function smartThingsCommand(target, command, args) {
-    const info = target.device.info;
-    const capability = target.methodInfo.capability;
-    return client.command(info.id, capability, command, args)
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.err(`wtf ${e}`);
-        })
-}
 
 const Capabilities = {
 }
