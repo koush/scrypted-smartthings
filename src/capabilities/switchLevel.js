@@ -13,7 +13,7 @@ SwitchLevel.prototype.setLevel = function(level) {
 }
 
 SwitchLevel.prototype.getLevel = function() {
-    return this.getAttribute(Switch.Attributes, 'level');
+    return this.getAttribute(SwitchLevel.Attributes, 'level');
 }
 
 SwitchLevel.SmartThingsCapability = 'switchLevel';

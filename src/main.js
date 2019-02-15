@@ -29,6 +29,7 @@ function addCapability(constructor) {
 
 addCapability(require('./capabilities/switch'))
 addCapability(require('./capabilities/switchLevel'))
+addCapability(require('./capabilities/contactSensor'))
 
 const Capability = require('./capabilities/capability')
 const { inherits } = require('util');
