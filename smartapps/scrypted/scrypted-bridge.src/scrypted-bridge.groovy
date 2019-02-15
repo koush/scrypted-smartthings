@@ -6,7 +6,7 @@
  */
 definition(
     name: "Scrypted Bridge",
-    namespace: "pdlove",
+    namespace: "scrypted",
     author: "Paul Lovelace",
     description: "API for JSON with complete set of devices",
     category: "SmartThings Labs",
