@@ -31,6 +31,7 @@ function addCapability(constructor) {
 addCapability(require('./capabilities/switch'))
 addCapability(require('./capabilities/switchLevel'))
 addCapability(require('./capabilities/contactSensor'))
+addCapability(require('./capabilities/motionSensor'))
 
 const Capability = require('./capabilities/capability')
 const { inherits } = require('util');
@@ -50,16 +51,20 @@ function SmartThingsDevice(client, item, info, capabilities) {
 }
 inherits(SmartThingsDevice, Capability);
 
+const ErrorSyncing = 'Error syncing. See log for details.';
+
 function DeviceProvider() {
     this.devices = {};
 
     client.list().then(response => {
+        log.clearAlert(ErrorSyncing);
+
         var devices = [];
         var payload = {
             devices,
         };
 
-        console.log(JSON.stringify(response.data.items, null, 2));
+        log.i(JSON.stringify(response.data.items, null, 2));
 
         for (var item of response.data.items) {
             var capabilities = item.components.map(component => component.capabilities.map(c => c.id));
@@ -84,7 +89,7 @@ function DeviceProvider() {
                 interfaces: interfaces,
                 events: events,
             }
-            console.log(`found: ${JSON.stringify(info)}`);
+            log.i(`found: ${JSON.stringify(info)}`);
             this.devices[item.deviceId] = new SmartThingsDevice(client, item, info, capabilities);
             devices.push(info);
         }
@@ -94,6 +99,7 @@ function DeviceProvider() {
         this.refresh();
     })
     .catch(e => {
+        log.a(ErrorSyncing);
         log.e(`error syncing devices ${e}`);
     })
 }
@@ -153,6 +159,7 @@ function checkToken(req, res) {
         res.send({
             code: 401,
         }, "Not Authorized");
+        log.a('The Scrypted SmartApp sent a device update, but the accessToken was incorrect. If the SmartApp was reinstalled, you may need to clear the previous "accessToken" in Plugin Settings.')
         return false;
     }
     return true;
