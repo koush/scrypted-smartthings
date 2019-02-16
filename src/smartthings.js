@@ -46,4 +46,10 @@ SmartThings.prototype.list = function() {
     return axios.get('https://api.smartthings.com/v1/devices', this.getDefaultOptions())
 }
 
+SmartThings.prototype.groups = function() {
+    // legacy api? requires personal access token? unsure.
+    return axios.get('https://graph.api.smartthings.com/api/groups', this.getDefaultOptions())
+
+}
+
 export default SmartThings;

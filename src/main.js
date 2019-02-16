@@ -56,6 +56,15 @@ const ErrorSyncing = 'Error syncing. See log for details.';
 function DeviceProvider() {
     this.devices = {};
 
+    var rooms = {};
+
+    client.groups()
+    .then(response => {
+        for (var group of response.data) {
+            rooms[group.id] = group.name;
+        }
+    })
+    .catch()
     client.list().then(response => {
         log.clearAlert(ErrorSyncing);
 
@@ -88,6 +97,8 @@ function DeviceProvider() {
                 id: item.deviceId,
                 interfaces: interfaces,
                 events: events,
+
+                room: rooms[item.roomId],
             }
             log.i(`found: ${JSON.stringify(info)}`);
             this.devices[item.deviceId] = new SmartThingsDevice(client, item, info, capabilities);
