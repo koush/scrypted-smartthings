@@ -7,15 +7,15 @@ function Switch() {
 inherits(Switch, Capability);
 
 Switch.prototype.turnOn = function() {
-    return this.command(Switch.SmartThingsCapability, 'on');
+    return this.command(Switch, 'on');
 }
 
 Switch.prototype.turnOff = function() {
-    return this.command(Switch.SmartThingsCapability, 'off');
+    return this.command(Switch, 'off');
 }
 
 Switch.prototype.isOn = function() {
-    return this.getAttribute(Switch.Attributes, 'switch');
+    return this.getAttribute(Switch, 'switch');
 }
 
 Switch.SmartThingsCapability = 'switch';

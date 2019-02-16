@@ -7,13 +7,13 @@ function SwitchLevel() {
 inherits(SwitchLevel, Capability);
 
 SwitchLevel.prototype.setLevel = function(level) {
-    return this.command(SwitchLevel.SmartThingsCapability, 'setLevel', [
+    return this.command(SwitchLevel, 'setLevel', [
         level,
     ]);
 }
 
 SwitchLevel.prototype.getLevel = function() {
-    return this.getAttribute(SwitchLevel.Attributes, 'level');
+    return this.getAttribute(SwitchLevel, 'level');
 }
 
 SwitchLevel.SmartThingsCapability = 'switchLevel';

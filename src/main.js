@@ -14,7 +14,7 @@ const client = new SmartThings(token);
 const Capabilities = {
 }
 
-// create mappings between SmartThings Attributes and Scrypted Interfaces
+// create mappings between SmartThings Attributes and Scrypted Interface Events
 const Attributes = {
 }
 
@@ -24,7 +24,7 @@ function addCapability(constructor) {
         prototype: constructor.prototype,
     }
     Object.keys(constructor.Attributes).map(attribute => {
-        Attributes[attribute] = constructor.ScryptedInterface;
+        Attributes[attribute] = constructor;
     })
 }
 
@@ -132,7 +132,7 @@ DeviceProvider.prototype.updateAll = function(deviceList) {
 
 DeviceProvider.prototype.refresh = function() {
     if (!appId || !accessToken) {
-        log.a('Install the Scrypted Bridge Smartapp within SmartThings to receive device events.');
+        log.a('Install the Scrypted Bridge Smartapp to receive device events from SmartThings: https://github.com/koush/scrypted.app/wiki/SmartThings-Bridge');
         // don't always nag?
         return;
     }
@@ -195,7 +195,8 @@ router.post('/public/update', function(req, res) {
 
     var iface = Attributes[body.attribute];
     if (iface) {
-        deviceManager.onDeviceEvent(id, iface, body.value)
+        var data = device.getAttribute(iface, body.attribute);
+        deviceManager.onDeviceEvent(id, iface.ScryptedInterface, data);
     }
 
     res.send('ok!');
