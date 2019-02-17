@@ -48,8 +48,28 @@ SmartThings.prototype.list = function() {
 
 SmartThings.prototype.groups = function() {
     // legacy api? requires personal access token? unsure.
-    return axios.get('https://graph.api.smartthings.com/api/groups', this.getDefaultOptions())
+    // it's sharded, so and not everything is replicated. query it all.
+    var promise = Promise.resolve([]);
+    var ret = [];
 
+    var urls = [
+        'https://graph.api.smartthings.com/api/groups',
+        'https://graph-na02-useast1.api.smartthings.com/api/groups',
+        'https://graph-na04-useast2.api.smartthings.com/api/groups',
+        'https://graph-eu01-euwest1.api.smartthings.com/api/groups',
+    ];
+
+    urls.forEach(url => {
+        promise = promise.then(() => axios.get(url, this.getDefaultOptions()))
+        .then(response => {
+            ret = ret.concat(response.data)
+        })
+        .catch();
+    })
+
+    return promise.then(() => ({
+        data: ret,
+    }));
 }
 
 export default SmartThings;

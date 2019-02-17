@@ -63,9 +63,11 @@ function DeviceProvider() {
         for (var group of response.data) {
             rooms[group.id] = group.name;
         }
+        log.i(`rooms: ${JSON.stringify(rooms, null, 2)}`)
     })
-    .catch()
-    client.list().then(response => {
+    .catch(e => log.e(`error syncing rooms, ignoring ${e}`))
+    .then(() => client.list())
+    .then(response => {
         log.clearAlert(ErrorSyncing);
 
         var devices = [];
@@ -92,8 +94,12 @@ function DeviceProvider() {
                 interfaces.push('Refresh');
             }
 
+            var name = item.name;
+            if (item.label && item.label.length)
+                name = item.label;
+
             var info = {
-                name: item.name,
+                name: name,
                 id: item.deviceId,
                 interfaces: interfaces,
                 events: events,
