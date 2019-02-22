@@ -20,7 +20,8 @@ SwitchLevel.SmartThingsCapability = 'switchLevel';
 SwitchLevel.ScryptedInterface = 'Brightness';
 SwitchLevel.Attributes = {
     level: function(value) {
-        return value; 
+        // everything is a string, parse it.
+        return !value ? 0 : parseInt(value);
     }
 }
 module.exports = SwitchLevel;
