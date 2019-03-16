@@ -11,10 +11,10 @@ MotionSensor.prototype.getState = function() {
 }
 
 MotionSensor.SmartThingsCapability = 'motionSensor';
-MotionSensor.ScryptedInterface = 'StateSensor';
+MotionSensor.ScryptedInterface = 'BinarySensor';
 MotionSensor.Attributes = {
     "motion": function(value) {
-        return (value && value === 'active') ? 'Open' : 'Closed';
+        return value === 'active';
     }
 }
 
