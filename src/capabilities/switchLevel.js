@@ -21,7 +21,12 @@ SwitchLevel.ScryptedInterface = 'Brightness';
 SwitchLevel.Attributes = {
     level: function(value) {
         // everything is a string, parse it.
-        return !value ? 0 : parseInt(value);
+        try {
+            return !value ? 0 : parseInt(value);
+        }
+        catch (e) {
+            return 0;
+        }
     }
 }
 module.exports = SwitchLevel;

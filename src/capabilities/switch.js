@@ -22,7 +22,7 @@ Switch.SmartThingsCapability = 'switch';
 Switch.ScryptedInterface = 'OnOff';
 Switch.Attributes = {
     "switch": function(value) {
-        return value && value === 'on'; 
+        return value === 'on'; 
     }
 }
 
