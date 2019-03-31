@@ -45,6 +45,8 @@ function SmartThingsDevice(client, item, info, capabilities) {
     this.item = item;
     this.info = info;
 
+    setImmediate(() => this.state = deviceManager.getDeviceState(info.nativeId));
+
     for (var capability of capabilities) {
         var iface = Capabilities[capability];
         if (iface) {
@@ -112,10 +114,6 @@ function DeviceProvider() {
         }
 
         deviceManager.onDevicesChanged(payload);
-
-        for (var id in this.devices) {
-            this.devices[id].state = deviceManager.getDeviceState(id);
-        }
 
         this.refresh();
     })
