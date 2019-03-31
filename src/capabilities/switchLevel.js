@@ -6,7 +6,7 @@ function SwitchLevel() {
 }
 inherits(SwitchLevel, Capability);
 
-SwitchLevel.prototype.setLevel = function(level) {
+SwitchLevel.prototype.setBrightness = function(level) {
     return this.command(SwitchLevel, 'setLevel', [
         level,
     ]);
