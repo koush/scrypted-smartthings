@@ -14,15 +14,11 @@ Switch.prototype.turnOff = function() {
     return this.command(Switch, 'off');
 }
 
-Switch.prototype.isOn = function() {
-    return this.getAttribute(Switch, 'switch');
-}
-
 Switch.SmartThingsCapability = 'switch';
 Switch.ScryptedInterface = 'OnOff';
 Switch.Attributes = {
-    "switch": function(value) {
-        return value === 'on'; 
+    "switch": function(state, value) {
+        state.on = value === 'on'; 
     }
 }
 

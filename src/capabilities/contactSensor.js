@@ -6,15 +6,11 @@ function ContactSensor() {
 }
 inherits(ContactSensor, Capability);
 
-ContactSensor.prototype.getState = function() {
-    return this.getAttribute(ContactSensor, 'contact');
-}
-
 ContactSensor.SmartThingsCapability = 'contactSensor';
-ContactSensor.ScryptedInterface = 'StateSensor';
+ContactSensor.ScryptedInterface = 'EntrySensor';
 ContactSensor.Attributes = {
-    "contact": function(value) {
-        return (value && value === 'open') ? 'Open' : 'Closed';
+    "contact": function(state, value) {
+        state.isEntryOpen = (value && value === 'open') ? 'Open' : 'Closed';
     }
 }
 

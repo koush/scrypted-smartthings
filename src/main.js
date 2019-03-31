@@ -1,5 +1,7 @@
 import SmartThings from './smartthings';
 import axios from 'axios';
+import sdk from '@scrypted/sdk';
+const { deviceManager, log } = sdk;
 
 const token = scriptSettings.getString('token');
 if (!token || !token.length) {
@@ -14,7 +16,8 @@ const client = new SmartThings(token);
 const Capabilities = {
 }
 
-// create mappings between SmartThings Attributes and Scrypted Interface Events
+// create conversion mappings between SmartThings Attributes and Scrypted Interface Properties,
+// ie, switch to isOn, and level to brightness
 const Attributes = {
 }
 
@@ -41,6 +44,7 @@ function SmartThingsDevice(client, item, info, capabilities) {
 
     this.item = item;
     this.info = info;
+    this.state = deviceManager.getDeviceState(info.id);
 
     for (var capability of capabilities) {
         var iface = Capabilities[capability];
@@ -90,9 +94,6 @@ function DeviceProvider() {
             if (appId && accessToken) {
                 events = interfaces.slice();
             }
-            else {
-                interfaces.push('Refresh');
-            }
 
             var name = item.name;
             if (item.label && item.label.length)
@@ -100,7 +101,7 @@ function DeviceProvider() {
 
             var info = {
                 name: name,
-                id: item.deviceId,
+                nativeId: item.deviceId,
                 interfaces: interfaces,
                 events: events,
 
@@ -148,7 +149,13 @@ DeviceProvider.prototype.updateAll = function(deviceList) {
     for (var device of deviceList) {
         var std = this.getDevice(device.deviceid);
         if (std) {
-            Object.assign(std.attributes, device.attributes);
+            for (var attribute in device.attributes) {
+                var attributeValue = device.attributes[attribute];
+                var iface = Attributes[attribute];
+                if (iface && iface.Attributes[attribute]) {
+                    iface.Attributes[attribute](std.state, attributeValue);
+                }
+            }
         }
     }
 }
@@ -215,12 +222,9 @@ router.post('/public/update', function(req, res) {
         return;
     }
 
-    device.attributes[body.attribute] = body.value;
-
     var iface = Attributes[body.attribute];
-    if (iface) {
-        var data = device.getAttribute(iface, body.attribute);
-        deviceManager.onDeviceEvent(id, iface.ScryptedInterface, data);
+    if (iface && iface.Attributes[body.attribute]) {
+        iface.Attributes[body.attribute](device.state, body.value);
     }
 
     res.send('ok!');

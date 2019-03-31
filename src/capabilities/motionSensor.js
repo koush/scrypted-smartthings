@@ -6,15 +6,11 @@ function MotionSensor() {
 }
 inherits(MotionSensor, Capability);
 
-MotionSensor.prototype.getState = function() {
-    return this.getAttribute(MotionSensor, 'motion');
-}
-
 MotionSensor.SmartThingsCapability = 'motionSensor';
-MotionSensor.ScryptedInterface = 'BinarySensor';
+MotionSensor.ScryptedInterface = 'MotionSensor';
 MotionSensor.Attributes = {
-    "motion": function(value) {
-        return value === 'active';
+    "motion": function(state, value) {
+        state.motionDetected = value === 'active';
     }
 }
 
