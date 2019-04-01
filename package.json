@@ -1,6 +1,6 @@
 {
    "name": "@scrypted/smartthings",
-   "version": "0.1.10",
+   "version": "0.1.11",
    "description": "SmartThings Device Bridge for Scrypted",
    "author": "Scrypted",
    "license": "Apache",

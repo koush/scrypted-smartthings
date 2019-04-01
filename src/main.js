@@ -40,7 +40,7 @@ const Capability = require('./capabilities/capability')
 const { inherits } = require('util');
 
 function SmartThingsDevice(client, item, info, capabilities) {
-    Capability.call(this, client, info.id);
+    Capability.call(this, client, info.nativeId);
 
     this.item = item;
     this.info = info;
