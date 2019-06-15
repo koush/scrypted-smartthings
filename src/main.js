@@ -3,7 +3,7 @@ import axios from 'axios';
 import sdk from '@scrypted/sdk';
 const { deviceManager, log } = sdk;
 
-const token = scriptSettings.getString('token');
+const token = localStorage.getItem('token');
 if (!token || !token.length) {
     log.a(`No SmartThings "token" was provided in Plugin Settings. Create a personal access (request all permissions) token here: https://account.smartthings.com/tokens`);
     throw new Error();
@@ -143,8 +143,8 @@ DeviceProvider.prototype.onRequest = function(req, res) {
     });
 };
 
-var appId = scriptSettings.getString('appId');
-var accessToken = scriptSettings.getString('accessToken');
+var appId = localStorage.getItem('appId');
+var accessToken = localStorage.getItem('accessToken');
 
 DeviceProvider.prototype.updateAll = function(deviceList) {
     for (var device of deviceList) {
@@ -178,7 +178,7 @@ DeviceProvider.prototype.refresh = function() {
 
 function checkToken(req, res) {
     if (!accessToken) {
-        scriptSettings.putString('accessToken', req.headers['authorization']);
+        localStorage.setItem('accessToken', req.headers['authorization']);
     }
     else if (accessToken != req.headers['authorization']) {
         res.send({
@@ -200,7 +200,7 @@ router.post('/public/initial', function(req, res) {
 
     if (!appId || body.app_id != appId) {
         appId = body.app_id;
-        scriptSettings.putString('appId', body.app_id);
+        localStorage.setItem('appId', body.app_id);
     }
     log.i(req.body);
     provider.updateAll(body.deviceList);

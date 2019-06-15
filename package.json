@@ -1,6 +1,6 @@
 {
    "name": "@scrypted/smartthings",
-   "version": "0.1.11",
+   "version": "0.1.12",
    "description": "SmartThings Device Bridge for Scrypted",
    "author": "Scrypted",
    "license": "Apache",
@@ -32,6 +32,6 @@
       "router": "^1.3.3"
    },
    "devDependencies": {
-      "@scrypted/sdk": "0.0.16"
+      "@scrypted/sdk": "0.0.26"
    }
 }
