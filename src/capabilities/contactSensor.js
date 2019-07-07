@@ -10,7 +10,8 @@ ContactSensor.SmartThingsCapability = 'contactSensor';
 ContactSensor.ScryptedInterface = 'EntrySensor';
 ContactSensor.Attributes = {
     "contact": function(state, value) {
-        state.isEntryOpen = (value && value === 'open') ? 'Open' : 'Closed';
+        // anything NOT closed is counted as open, just to be safe.
+        state.entryOpen = value !== 'closed';
     }
 }
 

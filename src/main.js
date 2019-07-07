@@ -59,6 +59,10 @@ inherits(SmartThingsDevice, Capability);
 const ErrorSyncing = 'Error syncing. See log for details.';
 
 function DeviceProvider() {
+    this.refreshDevices();
+}
+
+DeviceProvider.prototype.refreshDevices = function() {
     this.devices = {};
 
     var rooms = {};
@@ -185,6 +189,7 @@ function checkToken(req, res) {
             code: 401,
         }, "Not Authorized");
         log.a('The Scrypted SmartApp sent a device update, but the accessToken was incorrect. If the SmartApp was reinstalled, you may need to clear the previous "accessToken" in Plugin Settings.')
+        log.e(`expected: ${accessToken}, got ${req.headers['authorization']}`);
         return false;
     }
     return true;
@@ -201,6 +206,8 @@ router.post('/public/initial', function(req, res) {
     if (!appId || body.app_id != appId) {
         appId = body.app_id;
         localStorage.setItem('appId', body.app_id);
+        // trigger a refresh to expose events.
+        provider.refreshDevices();
     }
     log.i(req.body);
     provider.updateAll(body.deviceList);
