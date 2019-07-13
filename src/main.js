@@ -35,6 +35,7 @@ addCapability(require('./capabilities/switch'))
 addCapability(require('./capabilities/switchLevel'))
 addCapability(require('./capabilities/contactSensor'))
 addCapability(require('./capabilities/motionSensor'))
+addCapability(require('./capabilities/lock'))
 
 const Capability = require('./capabilities/capability')
 const { inherits } = require('util');
